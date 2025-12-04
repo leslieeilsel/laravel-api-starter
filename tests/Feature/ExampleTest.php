@@ -1,7 +1,17 @@
 <?php
 
-test('the application returns a successful response', function () {
+test('the application redirects to status page', function () {
     $response = $this->get('/');
 
-    $response->assertStatus(200);
+    $response->assertRedirect('/status');
+});
+
+test('the status page returns server available', function () {
+    $response = $this->get('/status');
+
+    $response->assertOk()
+        ->assertJson([
+            'status' => 'available',
+            'message' => 'Server Available',
+        ]);
 });

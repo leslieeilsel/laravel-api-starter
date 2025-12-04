@@ -7,5 +7,8 @@ Route::get('/', function () {
 });
 
 Route::get('/status', function () {
-    return response('Server Available', 200)->header('Content-Type', 'text/plain');
+    return response()->json([
+        'status' => 'available',
+        'message' => 'Server Available',
+    ]);
 });
