@@ -1,83 +1,41 @@
 # Laravel API Starter
 
-A Laravel-based API starter project.
+[中文文档](./README_zh_CN.md)
 
-## Requirements
+A Laravel 12 based API starter project with modular architecture, unified response format, permission management and more.
 
--   PHP >= 8.2
--   Composer
--   MySQL
--   Node.js & npm
+## Features
+
+-   📦 **Modular Architecture** - Based on `internachi/modular`
+-   🔒 **Unified Response Format** - Standardized API responses with i18n support
+-   🛡️ **Permission Management** - Based on `spatie/laravel-permission`
+-   📡 **Real-time Communication** - Based on `laravel/reverb`
+-   🧪 **Test Driven** - Based on `pestphp/pest`
 
 ## Quick Start
-
-### 1. Clone and Install
 
 ```bash
 git clone <repository-url>
 cd laravel-api-starter
-composer setup
+composer setup    # Install dependencies, initialize config, run migrations
+composer dev      # Start development server
 ```
 
-The `composer setup` command will:
+Visit http://localhost:8000 to verify installation.
 
--   Install PHP dependencies
--   Copy `.env.example` to `.env`
--   Generate application key
--   Run database migrations
--   Install npm dependencies
--   Build frontend assets
+## Documentation
 
-### 2. Configure Environment
+📚 **[View Full Documentation](./docs/README.md)**
 
-Edit `.env` file to configure your database and other settings:
-
-```env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=your_database
-DB_USERNAME=your_username
-DB_PASSWORD=your_password
-```
-
-### 3. Run Development Server
-
-```bash
-composer dev
-```
-
-This starts:
-
--   **Laravel server** at http://localhost:8000
--   **Queue worker** for background jobs
--   **Pail** for real-time log viewing
--   **Vite** for frontend assets
-
-### 4. Verify Installation
-
-Visit http://localhost:8000 — you will be redirected to `/status` and see:
-
-```json
-{
-    "status": "available",
-    "message": "Server Available"
-}
-```
-
-## Available Commands
-
-| Command             | Description               |
-| ------------------- | ------------------------- |
-| `composer setup`    | Initial project setup     |
-| `composer dev`      | Start development servers |
-| `composer test`     | Run tests                 |
-| `php artisan serve` | Start Laravel server only |
-
-## API Documentation
-
-All API routes are prefixed with `/api`. See `routes/api.php` for available endpoints.
+| Document                                              | Description                           |
+| ----------------------------------------------------- | ------------------------------------- |
+| [Architecture](./docs/01-architecture.md)             | Directory structure, modular design   |
+| [Packages](./docs/02-packages.md)                     | Core dependencies                     |
+| [Conventions](./docs/03-conventions.md)               | API response format, coding standards |
+| [Examples](./docs/04-examples.md)                     | User management module implementation |
+| [Deployment](./docs/05-deployment.md)                 | Nginx deployment configuration        |
+| [Redis/Queue/Reverb](./docs/06-redis-queue-reverb.md) | Cache, queue, real-time communication |
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+[MIT license](https://opensource.org/licenses/MIT)
