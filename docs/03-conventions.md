@@ -278,3 +278,95 @@ php artisan test tests/Feature/UserTest.php
 # 运行指定测试
 php artisan test --filter="can create a user"
 ```
+
+## API 版本控制
+
+当 API 需要引入破坏性变更时，使用版本控制保护现有客户端。
+
+### 路由前缀方式（推荐）
+
+```php
+// routes/api.php
+Route::prefix('v1')->group(function () {
+    Route::apiResource('users', V1\UserController::class);
+});
+
+Route::prefix('v2')->group(function () {
+    Route::apiResource('users', V2\UserController::class);
+});
+```
+
+### 目录结构
+
+```
+app/Http/Controllers/
+├── V1/
+│   └── UserController.php
+└── V2/
+    └── UserController.php
+```
+
+### 何时升级版本
+
+-   ✅ 响应结构变更
+-   ✅ 删除字段或端点
+-   ✅ 参数类型变更
+-   ❌ 新增可选字段（向后兼容，无需新版本）
+
+## 速率限制
+
+防止 API 被滥用，保护服务器资源。
+
+### 基础配置
+
+Laravel 内置 `throttle` 中间件，在 `routes/api.php` 中应用：
+
+```php
+// 默认限制：每分钟 60 次请求
+Route::middleware('throttle:60,1')->group(function () {
+    Route::apiResource('users', UserController::class);
+});
+
+// 认证用户更高限制
+Route::middleware(['auth:sanctum', 'throttle:120,1'])->group(function () {
+    // ...
+});
+```
+
+### 自定义限流规则
+
+在 `app/Providers/AppServiceProvider.php` 中定义：
+
+```php
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\RateLimiter;
+
+public function boot(): void
+{
+    // 按用户限流
+    RateLimiter::for('api', function (Request $request) {
+        return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+    });
+
+    // 登录接口更严格限制
+    RateLimiter::for('login', function (Request $request) {
+        return Limit::perMinute(5)->by($request->ip());
+    });
+}
+```
+
+```php
+// 应用自定义规则
+Route::post('/login', [AuthController::class, 'login'])
+    ->middleware('throttle:login');
+```
+
+### 响应头
+
+被限流时返回 `429 Too Many Requests`，响应头包含：
+
+```
+X-RateLimit-Limit: 60
+X-RateLimit-Remaining: 0
+Retry-After: 30
+```

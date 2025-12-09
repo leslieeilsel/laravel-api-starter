@@ -23,3 +23,38 @@
 | [pestphp/pest](https://github.com/pestphp/pest)                 | 测试框架   | [文档](https://pestphp.com/docs)                         |
 | [laravel/pint](https://github.com/laravel/pint)                 | 代码格式化 | [文档](https://laravel.com/docs/pint)                    |
 | [opcodesio/log-viewer](https://github.com/opcodesio/log-viewer) | 日志查看器 | [README](https://github.com/opcodesio/log-viewer#readme) |
+
+## 可选推荐
+
+| 包名                                                        | 用途         | 文档                                        |
+| ----------------------------------------------------------- | ------------ | ------------------------------------------- |
+| [knuckleswtf/scribe](https://github.com/knuckleswtf/scribe) | API 文档生成 | [文档](https://scribe.knuckles.wtf/laravel) |
+
+### Scribe - API 文档生成
+
+自动从路由、控制器和 FormRequest 生成 API 文档。
+
+```bash
+composer require --dev knuckleswtf/scribe
+php artisan vendor:publish --tag=scribe-config
+php artisan scribe:generate
+```
+
+通过注释增强文档：
+
+```php
+/**
+ * 创建用户
+ *
+ * @bodyParam name string required 用户名. Example: John
+ * @bodyParam email string required 邮箱. Example: john@example.com
+ *
+ * @response 200 {"code": 200, "message": "Success", "data": {"id": 1, "name": "John"}}
+ */
+public function store(StoreUserRequest $request)
+{
+    // ...
+}
+```
+
+生成后访问 `/docs` 查看交互式 API 文档。
