@@ -15,7 +15,7 @@
 ## 快速开始
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/leslieeilsel/laravel-api-starter
 cd laravel-api-starter
 composer setup    # 安装依赖、初始化配置、运行迁移
 composer dev      # 启动开发服务器

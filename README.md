@@ -15,7 +15,7 @@ A Laravel 12 based API starter project with modular architecture, unified respon
 ## Quick Start
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/leslieeilsel/laravel-api-starter
 cd laravel-api-starter
 composer setup    # Install dependencies, initialize config, run migrations
 composer dev      # Start development server
